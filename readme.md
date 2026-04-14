@@ -9,6 +9,27 @@
 - XXXXXXXXXXXXXXX
 - Pablo Oliveira Garcia
 
+## Proposta do Projeto
+
+Este projeto propõe o desenvolvimento de uma aplicação web para gestão de projetos e acompanhamento de tarefas, focada em equipes que precisam organizar atividades, status e entregas.
+
+A ideia é criar uma interface simples, clara e funcional que consuma diretamente a API fornecida, permitindo visualizar projetos, tarefas e métricas de progresso em pelo menos duas telas.
+
+Principais funcionalidades previstas:
+
+- Dashboard inicial com visão geral de projetos, status e indicadores de conclusão.
+- Tela de detalhe do projeto com lista de tarefas, responsável, prazo e status.
+- Navegação entre telas de forma clara e intuitiva.
+- Consumo de dados reais da API (`/projects`, `/tasks`, `/dashboard` ou rotas equivalentes).
+- Organização do frontend em HTML, CSS e JavaScript, com separação lógica entre a estrutura, estilo e comportamento.
+
+Telas / componentes planejados:
+
+1. **Dashboard de Projetos** – resumo geral com cards ou tabelas de projetos ativos e KPI de tarefas.
+2. **Projeto Detalhado** – visão de um projeto específico com tarefas associadas e informações de progresso.
+
+Esta proposta busca entregar um produto que não só exiba dados, mas que ajude o time a entender o andamento do trabalho e a planejar ações dentro de um contexto real de gestão de projetos.
+
 ## Requisitos Mínimos da Entrega
 
 Para ser considerada válida, a solução deve:
