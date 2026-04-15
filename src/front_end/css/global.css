@@ -1,10 +1,13 @@
 /* GLOBAL & VARIÁVEIS */
 :root {
     --bg-darker: #0a0a0a;
+    --bg-darker2:rgb(0, 0, 0);
     --bg-dark: #141414;
     --col-bg: #1c1c1e4b;
-    --card-bg: #28282c;
-
+    --card-bg: #28282c67;
+    --card-bg2: #28282cec;
+    --card-bg3: #28282c;
+    
     --text-main: #f3f4f6;
     --text-muted: #8a8a93;
 
@@ -14,7 +17,6 @@
 
     --border-color: #363232;
     --border-color2: #af3d3dda;
-    --border-color2: #ffffff1c;
 }
 
 * {
@@ -65,7 +67,7 @@ body {
 /* SIDEBAR */
 .sidebar {
     width: 260px;
-    background-color: var(--bg-darker);
+    background-color: var(--bg-darker2);
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;

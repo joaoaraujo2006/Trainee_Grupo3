@@ -1,5 +1,6 @@
 const API_BASE_URL = 'https://trainee-projetos-api-lime.vercel.app';
 const TEAM_TOKEN = 'equipe-beta-2026';
+let currentProjectId = null;
 
 export function getKanbanView(projectName = '') {
     const boardTitle = projectName ? `Kanban - ${projectName}` : 'Kanban de Tarefas';
@@ -73,6 +74,7 @@ export function getKanbanView(projectName = '') {
 }
 
 export async function initKanbanBoard(projectId = null) {
+    currentProjectId = projectId;
     const columns = {
         'A fazer': document.getElementById('cards-todo'),
         'Em andamento': document.getElementById('cards-doing'),
@@ -133,7 +135,7 @@ export async function initKanbanBoard(projectId = null) {
         const newTaskButton = document.getElementById('new-task-button');
         if (newTaskButton) {
             newTaskButton.addEventListener('click', () => {
-                alert('Funcionalidade de criação de tarefa em desenvolvimento.');
+                openCreateTaskModal();
             });
         }
 
@@ -272,4 +274,171 @@ function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+}
+
+function openCreateTaskModal() {
+    createTaskModalIfNotExists();
+    const backdrop = document.querySelector('#create-task-modal-backdrop');
+    if (backdrop) {
+        backdrop.style.display = 'flex';
+    }
+}
+
+function createTaskModalIfNotExists() {
+    if (document.querySelector('#create-task-modal-backdrop')) return;
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    backdrop.id = 'create-task-modal-backdrop';
+    backdrop.innerHTML = `
+        <div class="modal" id="create-task-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Criar Nova Tarefa</h2>
+                    <button class="close-btn" aria-label="Fechar modal">&times;</button>
+                </div>
+                <form id="create-task-form" class="modal-body">
+                    <div class="form-group">
+                        <label for="task-title">Título *</label>
+                        <input type="text" id="task-title" name="title" required placeholder="Digite o título da tarefa">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-description">Descrição *</label>
+                        <textarea id="task-description" name="description" required placeholder="Digite a descrição da tarefa" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-priority">Prioridade *</label>
+                            <select id="task-priority" name="priority" required>
+                                <option value="">Selecione uma prioridade</option>
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="task-status">Status *</label>
+                            <select id="task-status" name="status" required>
+                                <option value="">Selecione um status</option>
+                                <option value="A fazer">A fazer</option>
+                                <option value="Em andamento">Em andamento</option>
+                                <option value="Em revisão">Em revisão</option>
+                                <option value="Concluída">Concluída</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-assignee">Responsável *</label>
+                            <input type="text" id="task-assignee" name="assignee" required placeholder="Nome do responsável">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="task-estimated-hours">Horas Estimadas *</label>
+                            <input type="number" id="task-estimated-hours" name="estimatedHours" min="1" step="0.5" required placeholder="Ex: 8">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-due-date">Data de Vencimento *</label>
+                        <input type="date" id="task-due-date" name="dueDate" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-btn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Criar Tarefa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    setupCreateTaskModalListeners();
+}
+
+function setupCreateTaskModalListeners() {
+    const backdrop = document.querySelector('#create-task-modal-backdrop');
+    const form = document.querySelector('#create-task-form');
+    const closeBtn = document.querySelector('#create-task-modal .close-btn');
+    const cancelBtn = document.querySelector('#cancel-btn');
+
+    closeBtn.addEventListener('click', closeCreateTaskModal);
+    cancelBtn.addEventListener('click', closeCreateTaskModal);
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+            closeCreateTaskModal();
+        }
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await submitCreateTaskForm();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && backdrop.style.display === 'flex') {
+            closeCreateTaskModal();
+        }
+    });
+}
+
+function closeCreateTaskModal() {
+    const backdrop = document.querySelector('#create-task-modal-backdrop');
+    if (backdrop) {
+        backdrop.style.display = 'none';
+    }
+}
+
+async function submitCreateTaskForm() {
+    const form = document.querySelector('#create-task-form');
+    const formData = new FormData(form);
+
+    if (!currentProjectId) {
+        alert('Nenhum projeto selecionado. Por favor, selecione um projeto primeiro.');
+        return;
+    }
+
+    const payload = {
+        projectId: currentProjectId,
+        title: formData.get('title'),
+        description: formData.get('description'),
+        priority: formData.get('priority'),
+        status: formData.get('status'),
+        assignee: formData.get('assignee'),
+        estimatedHours: parseFloat(formData.get('estimatedHours')),
+        dueDate: formData.get('dueDate')
+    };
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/tasks`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-team-token': TEAM_TOKEN
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao criar tarefa');
+        }
+
+        const result = await response.json();
+        console.log('Tarefa criada com sucesso:', result);
+
+        closeCreateTaskModal();
+        form.reset();
+
+        // Recarregar o kanban com a nova tarefa
+        await initKanbanBoard(currentProjectId);
+    } catch (error) {
+        console.error('Erro ao criar tarefa:', error);
+        alert(`Erro ao criar tarefa: ${error.message}`);
+    }
 }
