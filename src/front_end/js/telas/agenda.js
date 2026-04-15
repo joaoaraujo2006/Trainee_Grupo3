@@ -1,6 +1,6 @@
 export function getAgendaView() {
   return `
-    <div class="agenda-scroll-container">
+    <div class="scroll-container">
         <header class="page-header">
         <h1>Agenda</h1>
         <p>Organize reuniões, prazos e compromissos do projeto.</p>
