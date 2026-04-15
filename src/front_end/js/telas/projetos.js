@@ -4,7 +4,6 @@ export function getProjetosView() {
         <header class="page-header">
             <div>
                 <h1>Projetos</h1>
-                <p>Escolha projetos para visualizar detalhes e participar do gerenciamento de tarefas.</p>
             </div>
         </header>
         <main class="projects-container" id="lista_projetos">
