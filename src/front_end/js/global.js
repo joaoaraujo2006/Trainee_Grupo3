@@ -1,7 +1,7 @@
 
 import { getProjetosView, insertProjectsCards } from './telas/projetos.js';
 import { getAgendaView, initAgenda } from './telas/agenda.js'; 
-import { getComunidadeView } from './telas/comunidade.js';
+import { getComunidadeView, initComunidade } from './telas/comunidade.js';
 import { getConfigView } from './telas/config.js';
 import { getKanbanView } from './telas/kanban.js';
 
@@ -20,6 +20,7 @@ async function renderView(viewName) {
             break;
         case 'comunidade':
             appContent.innerHTML = getComunidadeView();
+            initComunidade();
             break;
         case 'config':
             appContent.innerHTML = getConfigView();
