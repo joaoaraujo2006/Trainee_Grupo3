@@ -2,33 +2,33 @@ export function getAgendaView() {
   return `
     <div class="scroll-container">
         <header class="page-header">
-        <h1>Agenda</h1>
-        <p>Organize reuniões, prazos e compromissos do projeto.</p>
+            <h1>Agenda</h1>
+            <p>Organize reuniões, prazos e compromissos do projeto.</p>
         </header>
 
         <section class="panel agenda-wrapper">
-        <div class="calendar-top">
-            <button id="prevMonth" class="month-btn">◀</button>
-            <h2 id="monthTitle">Mês</h2>
-            <button id="nextMonth" class="month-btn">▶</button>
-        </div>
+            <div class="calendar-top">
+                <button id="prevMonth" class="month-btn">◀</button>
+                <h2 id="monthTitle">Mês</h2>
+                <button id="nextMonth" class="month-btn">▶</button>
+            </div>
 
-        <div class="calendar-grid week-days">
-            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sab</div>
-        </div>
+            <div class="calendar-grid week-days">
+                <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sab</div>
+            </div>
 
-        <div id="calendarDays" class="calendar-grid days-grid"></div>
+            <div id="calendarDays" class="calendar-grid days-grid"></div>
         </section>
 
         <section class="panel event-panel">
-        <h3 id="selectedDateTitle">Selecione um dia</h3>
+            <h3 id="selectedDateTitle">Selecione um dia no calendário</h3>
 
-        <div class="event-form">
-            <input type="text" id="eventInput" placeholder="Digite um compromisso">
-            <button id="addEventBtn" class="btn-primary">Adicionar</button>
-        </div>
+            <div class="event-form">
+                <input type="text" id="eventInput" placeholder="Digite um novo compromisso e aperte Enter..." disabled>
+                <button id="addEventBtn" class="btn-primary" disabled>Adicionar</button>
+            </div>
 
-        <ul id="eventList" class="event-list"></ul>
+            <ul id="eventList" class="event-list"></ul>
         </section>
     </div>
   `;
@@ -56,19 +56,20 @@ export function initAgenda() {
   let currentYear = currentDate.getFullYear();
   let selectedDateKey = null;
 
+  // LOCAL STORAGE
   function getEvents() {
-    return JSON.parse(localStorage.getItem("agendaEvents")) || {};
+    return JSON.parse(localStorage.getItem("inteliJr_agenda")) || {};
   }
 
   function saveEvents(events) {
-    localStorage.setItem("agendaEvents", JSON.stringify(events));
+    localStorage.setItem("inteliJr_agenda", JSON.stringify(events));
   }
 
   function formatDateKey(year, month, day) {
-    const monthFormatted = String(month + 1).padStart(2, "0");
-    const dayFormatted = String(day).padStart(2, "0");
-    return `${year}-${monthFormatted}-${dayFormatted}`;
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
   }
+
+  // RENDERIZAÇÃO DO CALENDÁRIO
 
   function renderCalendar() {
     calendarDays.innerHTML = "";
@@ -79,26 +80,23 @@ export function initAgenda() {
     const events = getEvents();
     const today = new Date();
 
-    // Dias vazios
     for (let i = 0; i < firstDay; i++) {
       const emptyCell = document.createElement("div");
-      emptyCell.className = "day empty"; // Usando CSS puro
+      emptyCell.className = "day empty";
       calendarDays.appendChild(emptyCell);
     }
 
-    // Dias do mês
     for (let day = 1; day <= lastDate; day++) {
       const dayCell = document.createElement("div");
-      dayCell.className = "day"; // Classe base
-
+      dayCell.className = "day";
       const dateKey = formatDateKey(currentYear, currentMonth, day);
 
       if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
-        dayCell.classList.add("today"); // Adiciona classe de hoje
+        dayCell.classList.add("today");
       }
 
       if (selectedDateKey === dateKey) {
-        dayCell.classList.add("selected"); // Adiciona classe selecionado
+        dayCell.classList.add("selected");
       }
 
       const dayNumber = document.createElement("div");
@@ -109,13 +107,18 @@ export function initAgenda() {
       if (events[dateKey] && events[dateKey].length > 0) {
         const preview = document.createElement("div");
         preview.className = "day-event-preview";
-        preview.textContent = `${events[dateKey].length} 📌`;
+        preview.innerHTML = `<i class="ph-fill ph-push-pin"></i> ${events[dateKey].length}`;
         dayCell.appendChild(preview);
       }
 
       dayCell.addEventListener("click", () => {
         selectedDateKey = dateKey;
         selectedDateTitle.textContent = `Compromissos de ${day}/${String(currentMonth + 1).padStart(2, "0")}/${currentYear}`;
+
+        eventInput.disabled = false;
+        addEventBtn.disabled = false;
+        eventInput.focus();
+
         renderCalendar();
         renderEvents();
       });
@@ -124,11 +127,13 @@ export function initAgenda() {
     }
   }
 
+  // RENDERIZAÇÃO E MANIPULAÇÃO DA LISTA
+
   function renderEvents() {
     eventList.innerHTML = "";
 
     if (!selectedDateKey) {
-      eventList.innerHTML = "<li class='empty-msg'>Selecione um dia no calendário.</li>";
+      eventList.innerHTML = "<li class='empty-msg'>Selecione um dia no calendário acima para ver ou adicionar tarefas.</li>";
       return;
     }
 
@@ -136,40 +141,42 @@ export function initAgenda() {
     const selectedEvents = events[selectedDateKey] || [];
 
     if (selectedEvents.length === 0) {
-      eventList.innerHTML = "<li class='empty-msg'>Nenhum compromisso para esta data.</li>";
+      eventList.innerHTML = "<li class='empty-msg'>Nenhum compromisso marcado para esta data.</li>";
       return;
     }
 
     selectedEvents.forEach((eventText, index) => {
       const li = document.createElement("li");
+      li.className = "event-item animate-in";
 
-      const span = document.createElement("span");
-      span.textContent = eventText;
+      li.innerHTML = `
+        <div class="event-info">
+            <i class="ph ph-check-circle"></i>
+            <span>${eventText}</span>
+        </div>
+        <button class="delete-btn" title="Excluir compromisso">
+            <i class="ph ph-trash"></i>
+        </button>
+      `;
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Excluir";
-      deleteBtn.className = "delete-btn";
-
+      const deleteBtn = li.querySelector(".delete-btn");
       deleteBtn.addEventListener("click", () => {
-        removeEvent(index);
+        li.classList.add("animate-out");
+        setTimeout(() => removeEvent(index), 200);
       });
 
-      li.appendChild(span);
-      li.appendChild(deleteBtn);
       eventList.appendChild(li);
     });
   }
 
   function addEvent() {
     const text = eventInput.value.trim();
-    if (!selectedDateKey) {
-      alert("Selecione um dia primeiro.");
-      return;
-    }
-    if (!text) return;
+    if (!selectedDateKey || !text) return;
 
     const events = getEvents();
-    if (!events[selectedDateKey]) events[selectedDateKey] = [];
+    if (!events[selectedDateKey]) {
+      events[selectedDateKey] = [];
+    }
 
     events[selectedDateKey].push(text);
     saveEvents(events);
@@ -184,32 +191,37 @@ export function initAgenda() {
     if (!events[selectedDateKey]) return;
 
     events[selectedDateKey].splice(index, 1);
-    if (events[selectedDateKey].length === 0) delete events[selectedDateKey];
+    if (events[selectedDateKey].length === 0) {
+      delete events[selectedDateKey];
+    }
 
     saveEvents(events);
     renderCalendar();
     renderEvents();
   }
 
+  // EVENT LISTENERS
+
   prevMonthBtn.addEventListener("click", () => {
     currentMonth--;
-    if (currentMonth < 0) {
-      currentMonth = 11;
-      currentYear--;
-    }
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
     renderCalendar();
   });
 
   nextMonthBtn.addEventListener("click", () => {
     currentMonth++;
-    if (currentMonth > 11) {
-      currentMonth = 0;
-      currentYear++;
-    }
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
     renderCalendar();
   });
 
   addEventBtn.addEventListener("click", addEvent);
+
+  eventInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addEvent();
+    }
+  });
 
   renderCalendar();
   renderEvents();
