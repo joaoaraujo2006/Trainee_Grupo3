@@ -1,5 +1,5 @@
 import { getProjetosView } from './telas/projetos.js';
-import { getAgendaView } from './telas/agenda.js';
+import { getAgendaView, initAgenda } from './telas/agenda.js'; 
 import { getComunidadeView } from './telas/comunidade.js';
 import { getConfigView } from './telas/config.js';
 
@@ -13,6 +13,7 @@ function renderView(viewName) {
             break;
         case 'agenda':
             appContent.innerHTML = getAgendaView();
+            initAgenda();
             break;
         case 'comunidade':
             appContent.innerHTML = getComunidadeView();
