@@ -1,0 +1,15 @@
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.project-card h2 {
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  color: #dddddd;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
