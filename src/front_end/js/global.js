@@ -3,12 +3,24 @@ import { getProjetosView, insertProjectsCards } from './telas/projetos.js';
 import { getAgendaView, initAgenda } from './telas/agenda.js'; 
 import { getComunidadeView, initComunidade } from './telas/comunidade.js';
 import { getConfigView } from './telas/config.js';
-import { getKanbanView } from './telas/kanban.js';
+import { getKanbanView, initKanbanBoard } from './telas/kanban.js';
 
 const appContent = document.getElementById('app-content');
 const navButtons = document.querySelectorAll('.nav-btn');
 
-async function renderView(viewName) {
+document.addEventListener('project-selected', async (event) => {
+    const { projectId, projectName } = event.detail;
+    const projetosButton = document.querySelector('.nav-btn[data-target="projetos"]');
+
+    if (projetosButton) {
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        projetosButton.classList.add('active');
+    }
+
+    await renderView('kanban', { projectId, projectName });
+});
+
+async function renderView(viewName, options = {}) {
     switch (viewName) {
         case 'projetos':
             appContent.innerHTML = getProjetosView();
@@ -26,7 +38,8 @@ async function renderView(viewName) {
             appContent.innerHTML = getConfigView();
             break;
         case 'kanban':
-            appContent.innerHTML = getKanbanView();
+            appContent.innerHTML = getKanbanView(options.projectName);
+            await initKanbanBoard(options.projectId);
             break;
         default:
             appContent.innerHTML = '<h1 style="padding: 40px;">Erro: Tela não encontrada</h1>';
