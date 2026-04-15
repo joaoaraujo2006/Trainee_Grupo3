@@ -24,7 +24,7 @@ export function getAgendaView() {
             <h3 id="selectedDateTitle">Selecione um dia no calendário</h3>
 
             <div class="event-form">
-                <input type="text" id="eventInput" placeholder="Digite um novo compromisso e aperte Enter..." disabled>
+                <input type="text" id="eventInput" placeholder="Digite um novo compromisso..." disabled>
                 <button id="addEventBtn" class="btn-primary" disabled>Adicionar</button>
             </div>
 
