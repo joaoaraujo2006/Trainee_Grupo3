@@ -1,0 +1,100 @@
+/* HEADER DO PROJETO */
+.board-header {
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.board-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* KANBAN BOARD & COLUNAS */
+.kanban-board {
+    display: flex;
+    gap: 24px;
+    padding: 32px 40px;
+    overflow-x: auto;
+    flex: 1;
+}
+
+.kanban-board::-webkit-scrollbar {
+    height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.kanban-column {
+    background-color: var(--col-bg);
+    border-radius: 12px;
+    width: 320px;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    height: 100%;
+    max-height: calc(100vh - 160px);
+}
+
+.column-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.column-header h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#col-doing .column-header h3 {
+    color: var(--brand-red);
+}
+
+.task-count {
+    background: var(--bg-darker);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+/* CARDS AREA */
+.column-cards {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.column-cards::-webkit-scrollbar {
+    width: 6px;
+}
+
+.column-cards::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.column-cards::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}

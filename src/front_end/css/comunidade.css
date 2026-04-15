@@ -1,0 +1,13 @@
+/* COMUNIDADE */
+#comunidade {
+    padding: 40px;
+}
+
+#comunidade h1 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+#comunidade p {
+    color: var(--text-muted);
+}

@@ -1,0 +1,13 @@
+/* AGENDA */
+#agenda {
+    padding: 40px;
+}
+
+#agenda h1 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+#agenda p {
+    color: var(--text-muted);
+}

@@ -1,0 +1,13 @@
+/* CONFIGURAÇÕES */
+#configuracoes {
+    padding: 40px;
+}
+
+#configuracoes h1 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+#configuracoes p {
+    color: var(--text-muted);
+}
