@@ -1,117 +1,121 @@
 .projects-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
     padding: 32px;
-    width: 80%;
 }
 
 .project-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color3);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
     flex-direction: column;
-    position: relative;
-    background: radial-gradient(circle at top left, rgba(255, 64, 64, 0.08), transparent 40%),
-                linear-gradient(180deg, rgba(26, 26, 28, 0.98), rgba(24, 24, 28, 0.95));
-    padding: 18px;
-    width: 340px;
-    color: #f5f5f5;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.075);
-    cursor: pointer;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-    padding-top: 7%;
-    border-radius: 15px;
+
 }
 
 .project-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-5px);
+    border-color: var(--brand-red);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 96, 69, 0.1);
+}
+
+.card-top-bars {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--brand-red), transparent);
+    display: flex;
+}
+
+.card-top-bars span {
+    flex: 1;
+    height: 100%;
+}
+
+.card-body-wrapper {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card h2 {
-    margin: 0 0 2px;
     font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    margin-top: 0;
 }
 
 .project-description {
-    margin: 0 0 14px;
-    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    color: var(--text-muted);
     line-height: 1.5;
-    font-size: 0.8rem;
-    height: 60%;
+    flex: 1;
+    margin-bottom: 16px;
 }
 
-.project-meta {
+.project-status-wrapper {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
-    padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 14px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.status.em-andamento {
+    background: rgba(255, 152, 0, 0.15);
+    color: #ffb74d;
+}
+
+.status.concluído {
+    background: rgba(76, 175, 80, 0.15);
+    color: #81c784;
+}
+
+.status.planejamento {
+    background: rgba(33, 150, 243, 0.15);
+    color: #64b5f6;
+}
+
+.status.em-revisão {
+    background: rgba(156, 39, 176, 0.15);
+    color: #ce93d8;
+}
+
+.project-assign {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .meta-label {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.85rem;
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+}
+
+.assign-value {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .error-message {
     color: #ff6b6b;
     padding: 16px;
-}
-.project-assign{
-    padding: 5px;
-    border: 2px solid rgba(192, 7, 7, 0.185);    
-    border-radius: 8px;
-    background-color: rgba(255, 0, 0, 0.034);
-    width: fit-content;
-    
-}
-.meta-label{
-    color: white;
-    font-weight: bold;
-}
-.assign-value{
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 0.8rem;
-}
-.status {
-    margin-bottom: 10px;
-    font-size: 12px;
-    
-}
-.em-andamento{
-    color: #ff9800;
-}
-.concluído{
-    color: #4caf50;
-}
-.planejamento{
-    color: #2196f3;
-}   
-.em-revisão{
-    color: #9c27b0;
-}
-.card-top-bar{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-}
-.background-geral{
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.192), rgb(241, 241, 241));
-}
-.background-em-andamento{
-    background-color: #ff9800;
-}
-.background-concluído{
-    background-color: #4caf50;
-}
-.background-planejamento{
-    background-color: #2196f3;
-}
-.background-em-revisão{
-    background-color: #9c27b0;
 }

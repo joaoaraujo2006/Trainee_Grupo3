@@ -44,13 +44,16 @@ function createProjectCard(projeto) {
                 <span></span>
                 <span></span>
             </div>
-            <span src></span>
-            <h2>${projeto.name}</h2>
-            <span class="status ${projeto.status.toLowerCase().replace(/\s/g, '-')}">${projeto.status}</span>
-            <p class="project-description">${projeto.description}</p>
-            <div class="project-assign">
-                <span class="meta-label">Assign:</span>
-                <span class="assign-value">${projeto.owner}</span>
+            <div class="card-body-wrapper">
+                <h2>${projeto.name}</h2>
+                <p class="project-description">${projeto.description}</p>
+                <div class="project-status-wrapper">
+                    <span class="status ${projeto.status.toLowerCase().replace(/\s/g, '-')}">${projeto.status}</span>
+                </div>
+                <div class="project-assign">
+                    <span class="meta-label">Responsável</span>
+                    <span class="assign-value">${projeto.owner}</span>
+                </div>
             </div>
         </article>
     `;
