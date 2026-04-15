@@ -8,11 +8,12 @@
     --text-main: #f3f4f6;
     --text-muted: #8a8a93;
 
-    --brand-red: #ff6045;
+    --brand-red: #f34040;
     --brand-red-hover: #d94e36;
     --brand-red-light: rgba(255, 96, 69, 0.12);
 
-    --border-color: #323236;
+    --border-color: #363232;
+    --border-color2: #af3d3dda;
 }
 
 * {
@@ -26,6 +27,7 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     overflow: hidden;
+    background: url('../assets/background.png');
 }
 
 .container {
@@ -51,12 +53,8 @@ body {
 }
 
 .brand-logo {
-    width: 64px;
+    width: 60px;
     height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--border-color);
-    background-color: var(--bg-dark);
     padding: 8px;
 }
 
@@ -114,7 +112,6 @@ nav {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-dark);
 }
 
 .tab-content {
@@ -127,7 +124,19 @@ nav {
     display: flex;
 }
 
-/* COMPONENTES GLOBAIS */
+.board-header {
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color2);
+}
+
+.board-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
 .btn-primary {
     background-color: var(--brand-red);
     color: white;

@@ -1,0 +1,90 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.div_projetos {
+    background-size: cover;
+    min-height: 100vh;
+    max-height: auto;
+
+}
+h1 {
+    margin-top: 0;
+}
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+.project-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.project-card h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5em;
+}
+.project-card p {
+    margin: 8px 0;
+    color: #666;
+}
+.project-card p strong {
+    color: #333;
+}
+.priority {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.priority.alta {
+    background: #ffcccc;
+    color: #cc0000;
+}
+.priority.média {
+    background: #ffffcc;
+    color: #cccc00;
+}
+.priority.baixa {
+    background: #ccffcc;
+    color: #00cc00;
+}
+.progress-bar {
+    background: #f0f0f0;
+    border-radius: 4px;
+    height: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: #4caf50;
+    transition: width 0.3s;
+}
+.status {
+    font-weight: bold;
+}
+.status.em-andamento {
+    color: #ff9800;
+}
+.status.planejamento {
+    color: #2196f3;
+}
+.status.em-revisão {
+    color: #9c27b0;
+}

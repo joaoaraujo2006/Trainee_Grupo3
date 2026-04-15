@@ -2,46 +2,49 @@ export function getProjetosView() {
     return `
         <header class="board-header">
             <div>
-                <h1>Sistema de Gestão Turma do Bem</h1>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Sprint Atual: Frontend</p>
+                <h1>Projetos</h1>
             </div>
-            <button class="btn-primary">
-                <i class="ph ph-plus"></i> Nova Tarefa
-            </button>
         </header>
+        <main class="projects-container" id="lista_projetos">
+            <!-- Cards serão inseridos aqui -->
+        </main>
+    `;
 
-        <div class="kanban-board">
-            
-            <div class="kanban-column" id="col-todo">
-                <div class="column-header">
-                    <h3>A Fazer</h3>
-                    <span class="task-count" id="count-todo">0</span>
-                </div>
-                <div class="column-cards" id="cards-todo">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 20px;">Carregando tarefas...</p>
-                </div>
+}
+
+export async function insertProjectsCards() {
+    const containerLista = document.getElementById('lista_projetos');
+    if (!containerLista) return;
+
+    try {
+        const resposta = await fetch('https://trainee-projetos-api.vercel.app/projects', {
+            method: 'GET',
+            headers: {
+                'x-team-token': 'equipe-beta-2026',
+            }
+        });
+
+        const projetos = await resposta.json();
+        containerLista.innerHTML = projetos.map(createProjectCard).join('');
+    } catch (erro) {
+        console.error('Erro ao carregar os dados!', erro);
+        containerLista.innerHTML = `<p class="error-message">Erro ao carregar projetos.</p>`;
+    }
+}
+
+function createProjectCard(projeto) {
+    return `
+        <article class="project-card">
+            <div class="card-top-bars">
+                <span></span>
+                <span></span>
             </div>
-
-            <div class="kanban-column" id="col-doing">
-                <div class="column-header">
-                    <h3>Fazendo</h3>
-                    <span class="task-count" id="count-doing">0</span>
-                </div>
-                <div class="column-cards" id="cards-doing">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 20px;">Carregando tarefas...</p>
-                </div>
+            <h2>${projeto.name}</h2>
+            <p class="project-description">${projeto.description}</p>
+            <div class="project-assign">
+                <span>Assign:</span>
+                <span class="assign-value">${projeto.owner}</span>
             </div>
-
-            <div class="kanban-column" id="col-done">
-                <div class="column-header">
-                    <h3>Feito</h3>
-                    <span class="task-count" id="count-done">0</span>
-                </div>
-                <div class="column-cards" id="cards-done">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 20px;">Carregando tarefas...</p>
-                </div>
-            </div>
-
-        </div>
+        </article>
     `;
 }
