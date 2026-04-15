@@ -35,6 +35,32 @@ body {
     height: 100vh;
 }
 
+/* SCROLL */
+.scroll-container {
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-container::-webkit-scrollbar { 
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track { 
+    background: #000000;
+}
+
+.scroll-container::-webkit-scrollbar-thumb { 
+    background-color: #313135;
+    border: 1px solid var(--brand-red);
+    border-radius: 0px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover { 
+    background-color: #505058;
+}
+
 /* SIDEBAR */
 .sidebar {
     width: 260px;
