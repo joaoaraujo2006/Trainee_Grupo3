@@ -1,13 +1,16 @@
 export function getProjetosView() {
     return `
-        <header class="board-header">
+    <div class="scroll-container">
+        <header class="page-header">
             <div>
                 <h1>Projetos</h1>
+                <p>Escolha projetos para visualizar detalhes e participar do gerenciamento de tarefas.</p>
             </div>
         </header>
         <main class="projects-container" id="lista_projetos">
             <!-- Cards serão inseridos aqui -->
         </main>
+    </div>
     `;
 
 }
