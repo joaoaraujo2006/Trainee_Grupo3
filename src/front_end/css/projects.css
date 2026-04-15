@@ -7,7 +7,7 @@
 
 .project-card {
     background: var(--card-bg);
-    border: 2px solid var(--border-color3);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
@@ -21,18 +21,6 @@
     transform: translateY(-5px);
     border-color: var(--brand-red);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 96, 69, 0.1);
-}
-
-.card-top-bars {
-    height: 4px;
-    width: 100%;
-    background: linear-gradient(90deg, var(--brand-red), transparent);
-    display: flex;
-}
-
-.card-top-bars span {
-    flex: 1;
-    height: 100%;
 }
 
 .card-body-wrapper {

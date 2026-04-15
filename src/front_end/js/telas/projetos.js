@@ -40,10 +40,6 @@ export async function insertProjectsCards() {
 function createProjectCard(projeto) {
     return `
         <article class="project-card" data-project-id="${projeto.id}" data-project-name="${projeto.name}">
-            <div class="card-top-bars">
-                <span></span>
-                <span></span>
-            </div>
             <div class="card-body-wrapper">
                 <div class="card-content">
                     <h2>${projeto.name}</h2>
