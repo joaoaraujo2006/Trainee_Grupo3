@@ -3,7 +3,7 @@ export function getAgendaView() {
     <div class="scroll-container">
         <header class="page-header">
             <h1>Agenda</h1>
-            <p>Organize reuniões, prazos e compromissos do projeto.</p>
+            <p>Organize reuniões, prazos e compromissos pessoais.</p>
         </header>
 
         <section class="panel agenda-wrapper">
