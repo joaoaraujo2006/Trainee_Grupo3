@@ -2,11 +2,11 @@
 
 # Membros do Grupo
 
-- XXXXXXXXXXXXXXX
+- Laís Victoria Lopes de Araújo
 - João Pedro Gonçalves Corrêa Araujo
-- XXXXXXXXXXXXXXX
-- XXXXXXXXXXXXXXX
-- XXXXXXXXXXXXXXX
+- Gabrie
+- Lucas
+- Luis Felipe
 - Pablo Oliveira Garcia
 
 ## Proposta do Projeto
@@ -71,3 +71,67 @@ README.md            # documentação da entrega em grupo
 - A pasta `src/front_end/` tem a estrutura básica de frontend com `html/index.html`, `css/style.css` e `js/script.js`
 - O projeto inclui a API clonada em `src/api/trainee-projetos-api/`, o que já permite rodar e testar os endpoints fornecidos.
 
+## Decisões Técnicas
+
+Optamos por utilizar HTML, CSS e JavaScript puro para o desenvolvimento do frontend, visando simplicidade, controle total sobre o código e facilidade de integração entre os membros da equipe.
+
+A separação entre HTML, CSS e JavaScript foi adotada para garantir organização e clareza no desenvolvimento, permitindo que diferentes integrantes trabalhem em partes específicas do sistema sem conflitos.
+
+A estrutura de pastas foi definida para separar claramente:
+- Componentes individuais (`docs/`)
+- Aplicação integrada (`src/front_end/`)
+- API (`src/api/`)
+
+Essa organização facilita manutenção, escalabilidade e entendimento do projeto.
+
+## Uso de IA
+
+A equipe utilizou ferramentas de Inteligência Artificial, como o ChatGPT, para:
+
+- Esclarecimento de dúvidas técnicas
+- Auxílio na estruturação de componentes
+- Sugestões de organização de código e layout
+- Apoio no entendimento do fluxo de integração com API
+
+O uso da IA foi feito como suporte, garantindo que todos os membros compreendessem as soluções implementadas.
+
+## Divisão de Responsabilidades
+
+- Laís: Desenvolvimento de componente individual e apoio na estruturação da interface
+- João Pedro: Implementação de funcionalidades e integração
+- Gabriel: Estilização e layout
+- Lucas: Estrutura HTML e organização de componentes
+- Luis Felipe: Integração com API
+- Pablo: Suporte geral e testes
+
+A divisão foi feita de forma a equilibrar as responsabilidades e permitir colaboração entre os membros.
+
+## Scrum Master
+
+O Scrum Master da equipe foi [NOME].
+
+Sua atuação incluiu:
+- Organização das tarefas entre os membros
+- Acompanhamento do progresso
+- Facilitação da comunicação entre a equipe
+- Garantia de alinhamento entre as partes do projeto
+
+Apesar do papel definido, todos os membros contribuíram ativamente no desenvolvimento técnico.
+
+## Dúvidas e Observações
+
+Durante o desenvolvimento, a equipe identificou alguns desafios:
+
+- Entendimento inicial da estrutura da API
+- Organização do trabalho em equipe
+- Integração dos componentes individuais em uma aplicação única
+
+Esses desafios foram sendo resolvidos ao longo do processo, com comunicação entre os membros e apoio de ferramentas externas.
+
+A equipe optou por uma solução funcional e organizada, priorizando clareza na interface e usabilidade.
+
+## Conclusão
+
+O projeto foi desenvolvido com foco em organização, clareza e colaboração em equipe, simulando um ambiente real de desenvolvimento.
+
+A solução proposta atende aos requisitos mínimos e demonstra a capacidade da equipe de estruturar e integrar um sistema funcional a partir de uma API real.
