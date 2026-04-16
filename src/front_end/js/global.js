@@ -2,7 +2,7 @@
 import { getProjetosView, insertProjectsCards } from './telas/projetos.js';
 import { getAgendaView, initAgenda } from './telas/agenda.js'; 
 import { getComunidadeView, initComunidade } from './telas/comunidade.js';
-import { getConfigView } from './telas/config.js';
+import { getConfigView, initConfig } from './telas/config.js';
 import { getKanbanView, initKanbanBoard } from './telas/kanban.js';
 
 const appContent = document.getElementById('app-content');
@@ -36,6 +36,7 @@ async function renderView(viewName, options = {}) {
             break;
         case 'config':
             appContent.innerHTML = getConfigView();
+            initConfig();
             break;
         case 'kanban':
             appContent.innerHTML = getKanbanView(options.projectName);
@@ -57,5 +58,14 @@ navButtons.forEach(button => {
         await renderView(targetView);
     });
 });
+
+const sidebar = document.getElementById('sidebar');
+const btnCollapse = document.getElementById('btn-collapse');
+
+if (btnCollapse && sidebar) {
+    btnCollapse.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+    });
+}
 
 renderView('projetos');
