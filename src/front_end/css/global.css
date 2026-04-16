@@ -150,6 +150,47 @@ body {
 
 .sidebar.collapsed #collapse-icon {
     transform: rotate(180deg);
+  
+}
+.sidebar {
+    width: 250px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar.collapsed h2,
+.sidebar.collapsed .nav-btn {
+    font-size: 0;
+}
+
+.sidebar .nav-btn::before {
+    font-size: 16px;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#btn-collapse {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
 }
 
 .brand-logo {
