@@ -33,43 +33,46 @@
 <body>
     <div class="container">
         <!-- Barra lateral de navegação -->
-        <aside class="sidebar">
-            <!-- Cabeçalho da sidebar com logo -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <img src="../assets/logo.png" alt="Logo Inteli Júnior" class="brand-logo">
             </div>
-            <!-- Navegação principal -->
+
             <nav aria-label="Menu principal">
-                <!-- Lista de links de navegação -->
                 <ul class="nav-links">
-                    <!-- Cada item de navegação é um botão com ícone e texto -->
                     <li>
                         <button class="nav-btn active" data-target="projetos" aria-current="page">
-                            <i class="ph ph-kanban"></i> Projetos
+                            <i class="ph ph-kanban"></i> <span class="nav-text">Projetos</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-btn" data-target="agenda">
-                            <i class="ph ph-calendar"></i> Agenda
+                            <i class="ph ph-calendar"></i> <span class="nav-text">Agenda</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-btn" data-target="comunidade">
-                            <i class="ph ph-users"></i> Comunidade
+                            <i class="ph ph-users"></i> <span class="nav-text">Comunidade</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-btn" data-target="insights">
-                            <i class="ph ph-brain"></i> Insights
+                            <i class="ph ph-brain"></i> <span class="nav-text">Insights</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-btn" data-target="config">
-                            <i class="ph ph-gear"></i> Configurações
+                            <i class="ph ph-gear"></i> <span class="nav-text">Configurações</span>
                         </button>
                     </li>
                 </ul>
             </nav>
+
+            <div class="sidebar-footer">
+                <button class="collapse-btn" id="btn-collapse" title="Recolher/Expandir Menu">
+                    <i class="ph ph-caret-double-left" id="collapse-icon"></i>
+                </button>
+            </div>
         </aside>
 
         <!-- Área principal de conteúdo, onde as telas serão carregadas dinamicamente -->
