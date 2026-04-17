@@ -59,3 +59,116 @@ navButtons.forEach(button => {
 });
 
 renderView('projetos');
+
+// ========== SISTEMA GLOBAL DE NOTIFICAÇÕES E CONFIRMAÇÃO ==========
+
+/**
+ * Mostra um modal de confirmação
+ * @param {string} title - Título do modal
+ * @param {string} message - Mensagem de confirmação
+ * @param {Function} onConfirm - Callback ao confirmar
+ * @param {Function} onCancel - Callback ao cancelar (opcional)
+ * @param {object} options - Opções customizáveis { confirmText, cancelText, variant }
+ */
+export function showConfirmationModal(title, message, onConfirm, onCancel = null, options = {}) {
+    const { confirmText = 'Confirmar', cancelText = 'Cancelar', variant = 'danger' } = options;
+    
+    let existingBackdrop = document.getElementById('confirmation-modal-backdrop');
+    if (existingBackdrop) {
+        existingBackdrop.remove();
+    }
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    backdrop.id = 'confirmation-modal-backdrop';
+    backdrop.innerHTML = `
+        <div class="confirmation-modal" data-variant="${variant}">
+            <div class="modal-header">
+                <h2>${title}</h2>
+                <button class="close-btn" aria-label="Fechar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>${message}</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancel-modal-btn">${cancelText}</button>
+                <button type="button" class="btn-primary btn-danger" id="confirm-modal-btn">${confirmText}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    const closeBtn = backdrop.querySelector('.close-btn');
+    const cancelBtn = backdrop.querySelector('#cancel-modal-btn');
+    const confirmBtn = backdrop.querySelector('#confirm-modal-btn');
+
+    const closeModal = () => {
+        backdrop.style.display = 'none';
+        setTimeout(() => backdrop.remove(), 300);
+        if (onCancel) onCancel();
+    };
+
+    const handleConfirm = async () => {
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="ph ph-spinner"></i>';
+        try {
+            await onConfirm();
+        } finally {
+            backdrop.style.display = 'none';
+            setTimeout(() => backdrop.remove(), 300);
+        }
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    confirmBtn.addEventListener('click', handleConfirm);
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && backdrop.parentElement) {
+            closeModal();
+        }
+    });
+
+    backdrop.style.display = 'flex';
+}
+
+/**
+ * Mostra uma notificação toast
+ * @param {string} message - Mensagem a exibir
+ * @param {string} type - Tipo: 'success', 'error', 'info'
+ * @param {number} duration - Tempo em ms (padrão: 3000)
+ */
+export function showNotification(message, type = 'info', duration = 3000) {
+    let container = document.getElementById('notifications-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notifications-container';
+        document.body.appendChild(container);
+    }
+
+    const notification = document.createElement('div');
+    notification.className = `toast-notification toast-${type}`;
+    
+    const icons = {
+        success: '<i class="ph ph-check-circle"></i>',
+        error: '<i class="ph ph-warning-circle"></i>',
+        info: '<i class="ph ph-info"></i>'
+    };
+
+    notification.innerHTML = `
+        <div class="toast-content">
+            ${icons[type] || icons.info}
+            <span>${message}</span>
+        </div>
+    `;
+
+    container.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.add('toast-exit');
+        setTimeout(() => notification.remove(), 300);
+    }, duration);
+}
