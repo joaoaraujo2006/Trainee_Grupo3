@@ -245,8 +245,8 @@
     }
 }
 
-/* MODAL DE CRIAÇÃO DE TAREFA */
-#create-task-modal-backdrop {
+/* MODAL DE CRIAÇÃO / EDIÇÃO DE TAREFA */
+.modal-backdrop {
     display: none;
     position: fixed;
     top: 0;
@@ -259,7 +259,7 @@
     justify-content: center;
 }
 
-#create-task-modal {
+.modal {
     background: var(--card-bg3);
     border: 2px solid var(--border-color2);
     border-radius: 12px;
@@ -377,7 +377,7 @@
         grid-template-columns: 1fr;
     }
 
-    #create-task-modal {
+    .modal {
         max-width: 95%;
     }
 }
@@ -420,4 +420,37 @@
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--border-color2);
+}
+
+.btn-danger {
+    background: rgba(243, 64, 64, 0.2);
+    color: #ff8a8a;
+    border: 1px solid var(--brand-red);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-danger:hover {
+    background: rgba(243, 64, 64, 0.3);
+    border-color: var(--brand-red-hover);
+}
+
+.btn-danger:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* SPINNER */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+button .ph-spinner {
+    animation: spin 1s linear infinite;
 }

@@ -1,3 +1,5 @@
+import { showConfirmationModal, showNotification } from '../global.js';
+
 const API_BASE_URL = 'https://trainee-projetos-api-lime.vercel.app';
 const TEAM_TOKEN = 'equipe-beta-2026';
 let currentProjectId = null;
@@ -140,6 +142,7 @@ export async function initKanbanBoard(projectId = null) {
         }
 
         attachDragStartListener();
+        attachTaskClickListener();
     } catch (error) {
         console.error('Erro ao carregar tarefas do kanban:', error);
         Object.values(columns).forEach(column => {
@@ -217,7 +220,7 @@ function setupColumnDropZone(columnElement, status) {
             updateTaskCounts();
         } catch (error) {
             console.error('Erro ao atualizar status da tarefa:', error);
-            alert('Erro ao mover tarefa. Tente novamente.');
+            showNotification('Erro ao mover tarefa. Tente novamente.', 'error');
         }
     });
 }
@@ -235,6 +238,18 @@ function attachDragStartListener() {
     document.addEventListener('dragend', (e) => {
         if (!e.target.classList.contains('kanban-card')) return;
         e.target.classList.remove('dragging');
+    });
+}
+
+function attachTaskClickListener() {
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.kanban-card');
+        if (!card) return;
+        
+        const taskId = parseInt(card.dataset.taskId);
+        const taskStatus = card.dataset.taskStatus;
+        
+        openEditTaskModal(taskId, taskStatus);
     });
 }
 
@@ -394,12 +409,243 @@ function closeCreateTaskModal() {
     }
 }
 
+async function openEditTaskModal(taskId, taskStatus) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+            method: 'GET',
+            headers: {
+                'x-team-token': TEAM_TOKEN,
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const task = await response.json();
+        createEditTaskModalIfNotExists(task);
+        
+        const backdrop = document.querySelector('#edit-task-modal-backdrop');
+        if (backdrop) {
+            backdrop.style.display = 'flex';
+        }
+    } catch (error) {
+        console.error('Erro ao carregar tarefa:', error);
+        showNotification('Erro ao carregar tarefa. Tente novamente.', 'error');
+    }
+}
+
+function createEditTaskModalIfNotExists(task) {
+    let backdrop = document.querySelector('#edit-task-modal-backdrop');
+    if (backdrop) {
+        backdrop.remove();
+    }
+
+    backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    backdrop.id = 'edit-task-modal-backdrop';
+    backdrop.innerHTML = `
+        <div class="modal" id="edit-task-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Editar Tarefa</h2>
+                    <button class="close-btn" aria-label="Fechar modal">&times;</button>
+                </div>
+                <form id="edit-task-form" class="modal-body">
+                    <div class="form-group">
+                        <label for="edit-task-title">Título *</label>
+                        <input type="text" id="edit-task-title" name="title" required placeholder="Digite o título da tarefa" value="${task.title}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-task-description">Descrição *</label>
+                        <textarea id="edit-task-description" name="description" required placeholder="Digite a descrição da tarefa" rows="3">${task.description}</textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-task-priority">Prioridade *</label>
+                            <select id="edit-task-priority" name="priority" required>
+                                <option value="">Selecione uma prioridade</option>
+                                <option value="Baixa" ${task.priority === 'Baixa' ? 'selected' : ''}>Baixa</option>
+                                <option value="Média" ${task.priority === 'Média' ? 'selected' : ''}>Média</option>
+                                <option value="Alta" ${task.priority === 'Alta' ? 'selected' : ''}>Alta</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-task-status">Status *</label>
+                            <select id="edit-task-status" name="status" required>
+                                <option value="">Selecione um status</option>
+                                <option value="A fazer" ${task.status === 'A fazer' ? 'selected' : ''}>A fazer</option>
+                                <option value="Em andamento" ${task.status === 'Em andamento' ? 'selected' : ''}>Em andamento</option>
+                                <option value="Em revisão" ${task.status === 'Em revisão' ? 'selected' : ''}>Em revisão</option>
+                                <option value="Concluída" ${task.status === 'Concluída' ? 'selected' : ''}>Concluída</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-task-assignee">Responsável *</label>
+                            <input type="text" id="edit-task-assignee" name="assignee" required placeholder="Nome do responsável" value="${task.assignee}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit-task-estimated-hours">Horas Estimadas *</label>
+                            <input type="number" id="edit-task-estimated-hours" name="estimatedHours" min="1" step="0.5" required placeholder="Ex: 8" value="${task.estimatedHours}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-task-due-date">Data de Vencimento *</label>
+                        <input type="date" id="edit-task-due-date" name="dueDate" required value="${task.dueDate}">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-danger" id="delete-btn">
+                            <i class="ph ph-trash"></i> Deletar
+                        </button>
+                        <div style="display: flex; gap: 12px;">
+                            <button type="button" class="btn-secondary" id="cancel-edit-btn">Cancelar</button>
+                            <button type="submit" class="btn-primary">Salvar Alterações</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    setupEditTaskModalListeners(task.id);
+}
+
+function setupEditTaskModalListeners(taskId) {
+    const backdrop = document.querySelector('#edit-task-modal-backdrop');
+    const form = document.querySelector('#edit-task-form');
+    const closeBtn = document.querySelector('#edit-task-modal .close-btn');
+    const cancelBtn = document.querySelector('#cancel-edit-btn');
+    const deleteBtn = document.querySelector('#delete-btn');
+
+    closeBtn.addEventListener('click', closeEditTaskModal);
+    cancelBtn.addEventListener('click', closeEditTaskModal);
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+            closeEditTaskModal();
+        }
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await submitEditTaskForm(taskId);
+    });
+
+    deleteBtn.addEventListener('click', async () => {
+        showConfirmationModal(
+            'Deletar Tarefa',
+            'Tem certeza que deseja deletar essa tarefa? Esta ação não pode ser desfeita.',
+            async () => {
+                await deleteTask(taskId);
+            },
+            null,
+            { confirmText: 'Deletar', cancelText: 'Cancelar', variant: 'danger' }
+        );
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && backdrop.style.display === 'flex') {
+            closeEditTaskModal();
+        }
+    });
+}
+
+function closeEditTaskModal() {
+    const backdrop = document.querySelector('#edit-task-modal-backdrop');
+    if (backdrop) {
+        backdrop.style.display = 'none';
+        setTimeout(() => backdrop.remove(), 300);
+    }
+}
+
+async function submitEditTaskForm(taskId) {
+    const form = document.querySelector('#edit-task-form');
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+
+    const payload = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        priority: formData.get('priority'),
+        status: formData.get('status'),
+        assignee: formData.get('assignee'),
+        estimatedHours: parseFloat(formData.get('estimatedHours')),
+        dueDate: formData.get('dueDate')
+    };
+
+    try {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="ph ph-spinner"></i>';
+
+        const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-team-token': TEAM_TOKEN
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao atualizar tarefa');
+        }
+
+        const result = await response.json();
+        console.log('Tarefa atualizada com sucesso:', result);
+
+        closeEditTaskModal();
+        showNotification('Tarefa atualizada com sucesso!', 'success');
+
+        await initKanbanBoard(currentProjectId);
+    } catch (error) {
+        console.error('Erro ao atualizar tarefa:', error);
+        showNotification(`Erro ao atualizar tarefa: ${error.message}`, 'error');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    }
+}
+
+async function deleteTask(taskId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'x-team-token': TEAM_TOKEN
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        closeEditTaskModal();
+        showNotification('Tarefa deletada com sucesso!', 'success');
+
+        await initKanbanBoard(currentProjectId);
+    } catch (error) {
+        console.error('Erro ao deletar tarefa:', error);
+        showNotification('Erro ao deletar tarefa. Tente novamente.', 'error');
+    }
+}
+
 async function submitCreateTaskForm() {
     const form = document.querySelector('#create-task-form');
     const formData = new FormData(form);
 
     if (!currentProjectId) {
-        alert('Nenhum projeto selecionado. Por favor, selecione um projeto primeiro.');
+        showNotification('Nenhum projeto selecionado. Por favor, selecione um projeto primeiro.', 'error');
         return;
     }
 
@@ -434,11 +680,12 @@ async function submitCreateTaskForm() {
 
         closeCreateTaskModal();
         form.reset();
+        showNotification('Tarefa criada com sucesso!', 'success');
 
         // Recarregar o kanban com a nova tarefa
         await initKanbanBoard(currentProjectId);
     } catch (error) {
         console.error('Erro ao criar tarefa:', error);
-        alert(`Erro ao criar tarefa: ${error.message}`);
+        showNotification(`Erro ao criar tarefa: ${error.message}`, 'error');
     }
 }
