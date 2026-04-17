@@ -51,5 +51,15 @@ Além das telas principais, trabalhei no desenvolvimento de funcionalidades que 
 
 ---
 
+## Uso de Inteligência Artificial
+
+Eu usei Inteligência no desenvolvimento de algumas coisas durante o case, a IA que eu usei foi o Gemini. Eu dei um contexto para ele do case e pedi ajuda no wireframe, mais especificamente para ele me dar uma ideia de coisas que eu poderia colocar nos dois protótipos que eu fiz. 
+Já no desenvolvimento concreto mesmo, eu pedia muita ajuda nos arquivos JS, eu nunca tive grandes chances de aprender JavaScript, então tenho dificuldade em fazer funções sozinho e linkar com o front das páginas. O funcionamento da página de configurações, mais especificamente o botão de limpar os chats da aba de comunidade foi feito com IA também.
+Na aba comunidades, eu também não tinha ideia de como fazer um chat mockado, então também usei as instruções da IA.
+Eu tentei evitar de usar na estrutura HTML e no design, normalmente ela não consegue replicar o que a gente idealiza para o visual da plataforma.
+Sobre o fork na API, eu pedi ajuda do Gemini para me dar instruções de como fazer as alterações e como efetuar o deploy.
+
+---
+
 ## Conclusão
 Minha participação neste processo seletivo foi pautada pela vontade de entregar algo que fosse além do básico. Ao assumir o controle da API e propor a tela de comunidades, meu objetivo foi mostrar que uma plataforma de gestão pode ser, ao mesmo tempo, técnica e social.
