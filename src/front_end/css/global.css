@@ -1,13 +1,13 @@
 /* GLOBAL & VARIÁVEIS */
 :root {
     --bg-darker: #0a0a0a;
-    --bg-darker2:rgb(0, 0, 0);
+    --bg-darker2: rgb(0, 0, 0);
     --bg-dark: #141414;
     --col-bg: #1c1c1e4b;
     --card-bg: #28282c67;
     --card-bg2: #28282cec;
     --card-bg3: #28282c;
-    
+
     --text-main: #f3f4f6;
     --text-muted: #8a8a93;
 
@@ -71,6 +71,8 @@ body {
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 100;
 }
 
 .sidebar-header {
@@ -79,6 +81,75 @@ body {
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 12px;
+}
+
+.nav-text {
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.collapse-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.collapse-btn:hover {
+    background: var(--card-bg);
+    color: var(--text-main);
+    border-color: var(--text-muted);
+}
+
+#collapse-icon {
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar.collapsed .nav-text {
+    display: none;
+    opacity: 0;
+}
+
+.sidebar.collapsed .nav-btn {
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.sidebar.collapsed .nav-btn.active {
+    border-left: none;
+    border-radius: 8px;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center;
+    padding: 24px 0;
+}
+
+.sidebar.collapsed .brand-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar.collapsed #collapse-icon {
+    transform: rotate(180deg);
 }
 
 .brand-logo {
