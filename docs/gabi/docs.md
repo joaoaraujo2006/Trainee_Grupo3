@@ -19,7 +19,24 @@ O foco principal foi criar uma estrutura simples, clara e alinhada com plataform
 
 > **Wireframe da tela de tarefas:**
 > ![Wireframe](./assets/wireframe.png)
+## Dependências
 
+Para funcionamento completo da tela de tarefas, são necessárias:
+
+- Integração com API de tarefas:
+  Responsável por fornecer os dados das tarefas (título, descrição, responsável, status, prazo).
+
+- Identificação do projeto:
+  A tela depende de um projeto selecionado previamente para carregar as tarefas correspondentes.
+
+- Navegação via sidebar:
+  Acesso à tela ocorre através da navegação principal do sistema.
+
+- Estrutura de dados padronizada:
+  As tarefas devem conter informações como título, status e responsável para correta exibição.
+
+- Integração futura com Kanban:
+  A tela de tarefas deve refletir os mesmos dados utilizados no quadro Kanban, garantindo consistência.
 ---
 
 ## Tela de Tarefas
