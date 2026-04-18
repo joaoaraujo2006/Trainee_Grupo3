@@ -67,8 +67,10 @@ A ideia foi aproximar a experiência do usuário de sistemas reais, organizando 
 
 Essa estrutura foi essencial para dar coerência ao fluxo de navegação da aplicação.
 
-> **Sidebar com navegação:**
-> ![Sidebar](./assets/sidebar.png)
+<p align="center">
+  <img src="./assets/sidebar.png" width="350">
+</p>
+<p align="center"><i>Sidebar com navegação entre telas</i></p>
 
 ---
 
