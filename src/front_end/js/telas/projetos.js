@@ -47,9 +47,9 @@ function createProjectCard(projeto) {
                     <div class="project-status-wrapper">
                         <span class="status ${projeto.status.toLowerCase().replace(/\s/g, '-')}">${projeto.status}</span>
                     </div>
-                    <div class="project-assign">
-                        <span class="meta-label">Responsável</span>
-                        <span class="assign-value">${projeto.owner}</span>
+                    <div class="project-client">
+                        <span class="meta-label">Empresa</span>
+                        <span class="assign-value">${projeto.client || 'Não informado'}</span>
                     </div>
                 </div>
                 <button class="menu-btn" data-project-id="${projeto.id}" aria-label="Menu do projeto">
@@ -127,8 +127,12 @@ function openModalWithData(projeto) {
                 <p><span class="status ${projeto.status.toLowerCase().replace(/\s/g, '-')}">${projeto.status}</span></p>
             </div>
             <div class="info-group">
+                <label>Empresa:</label>
+                <p>${projeto.client || 'Não informado'}</p>
+            </div>
+            <div class="info-group">
                 <label>Responsável:</label>
-                <p>${projeto.owner}</p>
+                <p>${projeto.owner || 'Não informado'}</p>
             </div>
             ${projeto.startDate ? `
                 <div class="info-group">

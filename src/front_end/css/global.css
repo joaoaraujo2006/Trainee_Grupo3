@@ -31,6 +31,7 @@ body {
     color: var(--text-main);
     overflow: hidden;
     background: url('../assets/background.png');
+    background-size: cover;
 }
 
 .container {

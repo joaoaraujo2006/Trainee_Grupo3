@@ -113,9 +113,10 @@
     color: #ce93d8;
 }
 
-.project-assign {
+.project-client {
     padding-top: 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 12px;
 }
 
 .meta-label {
@@ -147,14 +148,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.747);
     z-index: 1000;
     align-items: center;
     justify-content: center;
 }
 
 #project-modal {
-    background: var(--card-bg);
+    background: var(--card-bg2);
     border: 2px solid var(--border-color2);
     border-radius: 12px;
     max-width: 600px;

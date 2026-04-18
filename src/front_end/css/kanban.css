@@ -329,7 +329,7 @@
 .form-group textarea,
 .form-group select {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color2);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 12px 16px;
     color: var(--text-main);
@@ -347,7 +347,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--brand-red);
+    border-color: var(--border-color);
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 0 3px rgba(255, 96, 69, 0.1);
 }
@@ -414,7 +414,7 @@
 .btn-secondary {
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-main);
-    border: 1px solid var(--border-color2);
+    border: 1px solid var(--border-color);
 }
 
 .btn-secondary:hover {
