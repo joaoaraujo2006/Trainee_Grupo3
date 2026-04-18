@@ -4,9 +4,9 @@
 
 - Laís Victoria Lopes de Araújo
 - João Pedro Gonçalves Corrêa Araujo
-- Gabrie
-- Lucas
-- Luis Felipe
+- Gabrieli Marques Battini
+- Lucas V.
+- Luis Felipe Campagnaro Copolillo
 - Pablo Oliveira Garcia
 
 ## Proposta do Projeto
@@ -99,7 +99,7 @@ O uso da IA foi feito como suporte, garantindo que todos os membros compreendess
 
 - Laís: Desenvolvimento de componente individual e apoio na estruturação da interface
 - João Pedro: Implementação de funcionalidades e integração
-- Gabriel: Estilização e layout
+- Gabrieli: Estilização e layout
 - Lucas: Estrutura HTML e organização de componentes
 - Luis Felipe: Integração com API
 - Pablo: Suporte geral e testes
@@ -108,7 +108,7 @@ A divisão foi feita de forma a equilibrar as responsabilidades e permitir colab
 
 ## Scrum Master
 
-O Scrum Master da equipe foi [NOME].
+O Scrum Master da equipe foi a Gabrielli Marques.
 
 Sua atuação incluiu:
 - Organização das tarefas entre os membros
@@ -125,6 +125,7 @@ Durante o desenvolvimento, a equipe identificou alguns desafios:
 - Entendimento inicial da estrutura da API
 - Organização do trabalho em equipe
 - Integração dos componentes individuais em uma aplicação única
+- Entendimento de estruturas JavaScript e aplicabilidade
 
 Esses desafios foram sendo resolvidos ao longo do processo, com comunicação entre os membros e apoio de ferramentas externas.
 
