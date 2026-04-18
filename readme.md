@@ -5,7 +5,7 @@
 - Laís Victoria Lopes de Araújo
 - João Pedro Gonçalves Corrêa Araujo
 - Gabrieli Marques Battini
-- Lucas V.
+- Lucas Vinicius Cerdeira da Cunha
 - Luis Felipe Campagnaro Copolillo
 - Pablo Oliveira Garcia
 
